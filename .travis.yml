@@ -3,6 +3,16 @@ services:
   - docker 
 
 before_install: 
-  - docker build -t takwa/docker-react -f Dockerfile.dev .
+  - docker build -t suissitakwa/docker-react -f Dockerfile.dev .
 script: 
-  - docker run -e CI=true takwa/docker-react npm run test 
+  - docker run -e CI=true suissitakwa/docker-react npm run test 
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-257139416656"
+  bucket_path: "docker-react"
+  on:
+   branch: master 
